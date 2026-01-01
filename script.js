@@ -1,32 +1,12 @@
 // ===== ACADEMIC PORTFOLIO INTERACTIVE FEATURES =====
 
 // ===== LOADING SCREEN =====
+// ===== LOADING SCREEN =====
 function initializeLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
-    const loadingText = loadingScreen?.querySelector('.loading-text');
 
-    const loadingSteps = [
-        'Initializing Academic Portfolio...',
-        'Loading Research Data...',
-        'Preparing Publications...',
-        'Setting up Interactive Features...',
-        'Almost Ready...'
-    ];
-
-    let currentStep = 0;
-
-    // Update loading text every 500ms
-    const textInterval = setInterval(() => {
-        if (loadingText && currentStep < loadingSteps.length) {
-            loadingText.textContent = loadingSteps[currentStep];
-            currentStep++;
-        }
-    }, 500);
-
-    // Complete loading after 2.5 seconds
+    // Complete loading after 3 seconds
     setTimeout(() => {
-        clearInterval(textInterval);
-
         if (loadingScreen) {
             loadingScreen.classList.add('fade-out');
 
@@ -35,7 +15,7 @@ function initializeLoadingScreen() {
                 loadingScreen.remove();
             }, 800);
         }
-    }, 2500);
+    }, 3000);
 }
 
 // Initialize loading screen immediately
@@ -185,7 +165,7 @@ function initializePortfolio() {
         // Create modal overlay
         const modalOverlay = document.createElement('div');
         modalOverlay.className = 'confirmation-modal-overlay';
-        
+
         // Force bright theme with inline styles
         modalOverlay.style.cssText = `
             position: fixed !important;
@@ -539,25 +519,23 @@ formInputs.forEach(input => {
 });
 
 // ===== SCROLL ANIMATIONS =====
+// ===== SCROLL ANIMATIONS =====
 function animateOnScroll() {
-    const elements = document.querySelectorAll('.expertise-item, .timeline-item, .research-card');
+    const revealElements = document.querySelectorAll('.reveal');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Only animate once
             }
         });
     }, {
-        threshold: 0.1,
+        threshold: 0.15,
         rootMargin: '0px 0px -50px 0px'
     });
 
-    elements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    revealElements.forEach(element => {
         observer.observe(element);
     });
 }
@@ -880,7 +858,7 @@ function populatePublications() {
 
         publicationsToShow.forEach((pub, index) => {
             const publicationCard = document.createElement('div');
-            publicationCard.className = 'publication-card';
+            publicationCard.className = 'publication-card reveal';
             publicationCard.setAttribute('data-category', pub.year);
 
             publicationCard.innerHTML = `
@@ -898,6 +876,17 @@ function populatePublications() {
                 `;
 
             publicationsGrid.appendChild(publicationCard);
+
+            // Observer needs to observe this new element
+            const animateObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        animateObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            animateObserver.observe(publicationCard);
         });
 
         updateLoadMoreButton();
@@ -974,7 +963,7 @@ function populatePatents() {
 
         patentsToShow.forEach(patent => {
             const patentCard = document.createElement('div');
-            patentCard.className = 'patent-card';
+            patentCard.className = 'patent-card reveal';
 
             let icon = 'fas fa-lock';
             if (patent.category.includes('Healthcare') || patent.category.includes('Medical')) {
@@ -1005,6 +994,17 @@ function populatePatents() {
                 `;
 
             patentsGrid.appendChild(patentCard);
+
+            // Observer needs to observe this new element
+            const animateObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        animateObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            animateObserver.observe(patentCard);
         });
 
         updatePatentsLoadMoreButton();

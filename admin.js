@@ -180,6 +180,7 @@ function renderPatents() {
 }
 
 // Modal functions
+// Modal functions
 function openAddModal(type) {
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modal-title');
@@ -220,6 +221,62 @@ function openAddModal(type) {
                 <textarea id="event-description" name="description" required rows="4"></textarea>
             </div>
         `;
+    } else if (type === 'publication') {
+        modalTitle.textContent = 'Add New Publication';
+        formFields.innerHTML = `
+            <div class="form-group">
+                <label for="pub-title">Publication Title *</label>
+                <input type="text" id="pub-title" name="title" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pub-year">Year *</label>
+                    <input type="number" id="pub-year" name="year" required min="1990" max="2030">
+                </div>
+                <div class="form-group">
+                    <label for="pub-type">Type *</label>
+                    <select id="pub-type" name="type" required>
+                        <option value="Journal">Journal</option>
+                        <option value="Conference">Conference</option>
+                        <option value="Book Chapter">Book Chapter</option>
+                        <option value="Book">Book</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pub-subtitle">Subtitle/Description</label>
+                <input type="text" id="pub-subtitle" name="subtitle">
+            </div>
+            <div class="form-group">
+                <label for="pub-journal">Journal/Conference Name *</label>
+                <input type="text" id="pub-journal" name="journal" required>
+            </div>
+        `;
+    } else if (type === 'patent') {
+        modalTitle.textContent = 'Add New Patent';
+        formFields.innerHTML = `
+            <div class="form-group">
+                <label for="patent-title">Patent Title *</label>
+                <input type="text" id="patent-title" name="title" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="patent-no">Patent Number *</label>
+                    <input type="text" id="patent-no" name="patentNo" required>
+                </div>
+                <div class="form-group">
+                    <label for="patent-date">Date *</label>
+                    <input type="text" id="patent-date" name="date" required placeholder="e.g. 11 January 2021">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="patent-status">Status *</label>
+                <select id="patent-status" name="status" required>
+                    <option value="Granted">Granted</option>
+                    <option value="Published">Published</option>
+                </select>
+            </div>
+        `;
     }
 
     modal.style.display = 'flex';
@@ -242,6 +299,7 @@ function editEvent(eventId) {
 
     editingId = eventId;
     openAddModal('event');
+    document.getElementById('modal-title').textContent = 'Edit Event';
 
     // Populate form
     document.getElementById('event-title').value = event.title;
@@ -249,8 +307,6 @@ function editEvent(eventId) {
     document.getElementById('event-type').value = event.type;
     document.getElementById('event-location').value = event.location;
     document.getElementById('event-description').value = event.description;
-
-    document.getElementById('modal-title').textContent = 'Edit Event';
 }
 
 function deleteEvent(eventId) {
@@ -270,6 +326,10 @@ function setupFormHandlers() {
 
             if (currentSection === 'events') {
                 handleEventSubmission();
+            } else if (currentSection === 'publications') {
+                handlePublicationSubmission();
+            } else if (currentSection === 'patents') {
+                handlePatentSubmission();
             }
         });
     }
@@ -285,26 +345,20 @@ function handleEventSubmission() {
         description: formData.get('description')
     };
 
-    // Validate
-    if (!eventData.title || !eventData.date || !eventData.type || !eventData.location || !eventData.description) {
+    if (!eventData.title || !eventData.date || !eventData.type) {
         showNotification('Please fill all required fields', 'error');
         return;
     }
 
     if (editingId) {
-        // Update existing event
         const eventIndex = adminData.events.findIndex(e => e.id === editingId);
         if (eventIndex !== -1) {
             adminData.events[eventIndex] = { ...adminData.events[eventIndex], ...eventData };
             showNotification('Event updated successfully!', 'success');
         }
     } else {
-        // Create new event
-        const newEvent = {
-            id: Date.now(),
-            ...eventData
-        };
-        adminData.events.push(newEvent);
+        const newEvent = { id: Date.now(), ...eventData };
+        adminData.events.unshift(newEvent); // Add to beginning
         showNotification('Event created successfully!', 'success');
     }
 
@@ -313,16 +367,69 @@ function handleEventSubmission() {
     closeModal();
 }
 
+function handlePublicationSubmission() {
+    const formData = new FormData(document.getElementById('item-form'));
+    const pubData = {
+        title: formData.get('title'),
+        year: formData.get('year'),
+        type: formData.get('type'),
+        subtitle: formData.get('subtitle'),
+        journal: formData.get('journal')
+    };
+
+    if (!pubData.title || !pubData.year || !pubData.type) {
+        showNotification('Please fill all required fields', 'error');
+        return;
+    }
+
+    // Since we don't have IDs for preloaded data, we can't easily edit them yet without modifying structure
+    // For now, allow adding new ones.
+    const newPub = { ...pubData };
+    adminData.publications.unshift(newPub);
+    showNotification('Publication added successfully!', 'success');
+
+    savePublications();
+    renderPublications();
+    closeModal();
+}
+
+function handlePatentSubmission() {
+    const formData = new FormData(document.getElementById('item-form'));
+    const patentData = {
+        title: formData.get('title'),
+        patentNo: formData.get('patentNo'),
+        date: formData.get('date'),
+        status: formData.get('status')
+    };
+
+    if (!patentData.title || !patentData.patentNo) {
+        showNotification('Please fill all required fields', 'error');
+        return;
+    }
+
+    const newPatent = { ...patentData };
+    adminData.patents.unshift(newPatent);
+    showNotification('Patent added successfully!', 'success');
+
+    savePatents();
+    renderPatents();
+    closeModal();
+}
+
 function saveEvents() {
     localStorage.setItem('allEvents', JSON.stringify(adminData.events));
-    localStorage.setItem('siteEvents', JSON.stringify(adminData.events));
+    // Dispatch generic storage event if needed by main site
+}
 
-    // Trigger storage event for real-time updates
-    window.dispatchEvent(new StorageEvent('storage', {
-        key: 'siteEvents',
-        newValue: JSON.stringify(adminData.events),
-        storageArea: localStorage
-    }));
+function savePublications() {
+    // You might want to save to localStorage if the main site reads from it
+    // But currently main site script.js uses hardcoded arrays or filtering HTML
+    // Ideally, script.js should read from localStorage if present
+    localStorage.setItem('adminPublications', JSON.stringify(adminData.publications));
+}
+
+function savePatents() {
+    localStorage.setItem('adminPatents', JSON.stringify(adminData.patents));
 }
 
 function showNotification(message, type = 'info') {
@@ -375,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function checkAuthentication() {
     const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
-    
+
     if (isLoggedIn) {
         showAdminPanel();
         initializeAdmin();
@@ -389,7 +496,7 @@ function checkAuthentication() {
 function setupLoginForm() {
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
             handleLogin();
         });
@@ -400,7 +507,7 @@ function handleLogin() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const errorDiv = document.getElementById('login-error');
-    
+
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         // Successful login
         sessionStorage.setItem('adminLoggedIn', 'true');
@@ -414,7 +521,7 @@ function handleLogin() {
         // Failed login
         errorDiv.style.display = 'block';
         document.getElementById('password').value = '';
-        
+
         // Add shake animation to login card
         const loginCard = document.querySelector('.login-card');
         loginCard.classList.add('shake');
@@ -437,7 +544,7 @@ function showAdminPanel() {
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const toggleIcon = document.getElementById('password-toggle-icon');
-    
+
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
         toggleIcon.classList.remove('fa-eye');
@@ -453,11 +560,11 @@ function logout() {
     if (confirm('Are you sure you want to logout?')) {
         sessionStorage.removeItem('adminLoggedIn');
         showLoginForm();
-        
+
         // Clear form
         document.getElementById('login-form').reset();
         document.getElementById('login-error').style.display = 'none';
-        
+
         showNotification('Logged out successfully!', 'success');
     }
 }

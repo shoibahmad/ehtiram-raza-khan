@@ -14,188 +14,6 @@
     <!-- EmailJS CDN -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0891b2 0%, #14b8a6 30%, #f59e0b 70%, #ff6b6b 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            overflow: hidden;
-        }
-
-        .loading-screen::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background:
-                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-            animation: backgroundMove 20s ease-in-out infinite;
-        }
-
-        .loading-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-logo {
-            margin-bottom: 2rem;
-            animation: logoFloat 3s ease-in-out infinite;
-            position: relative;
-            z-index: 2;
-        }
-
-        .loading-logo svg {
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1.2s linear infinite;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .loading-text {
-            color: white;
-            font-size: 1.3rem;
-            font-weight: 500;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            animation: textPulse 2s ease-in-out infinite;
-            padding: 0 1rem;
-        }
-
-        /* Mobile responsive loading screen */
-        @media (max-width: 768px) {
-            .loading-logo svg {
-                width: 80px;
-                height: 80px;
-            }
-
-            .loading-spinner {
-                width: 40px;
-                height: 40px;
-                border-width: 3px;
-            }
-
-            .loading-text {
-                font-size: 1rem;
-                padding: 0 2rem;
-            }
-
-            .loading-progress {
-                width: 250px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .loading-logo svg {
-                width: 60px;
-                height: 60px;
-            }
-
-            .loading-text {
-                font-size: 0.9rem;
-            }
-
-            .loading-progress {
-                width: 200px;
-            }
-        }
-
-        @keyframes logoFloat {
-
-            0%,
-            100% {
-                transform: translateY(0px) scale(1);
-            }
-
-            50% {
-                transform: translateY(-15px) scale(1.05);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes textPulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes backgroundMove {
-
-            0%,
-            100% {
-                transform: rotate(0deg);
-            }
-
-            50% {
-                transform: rotate(180deg);
-            }
-        }
-
-        .loading-progress {
-            width: 300px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            margin-top: 1rem;
-            overflow: hidden;
-            position: relative;
-            z-index: 2;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, white, rgba(255, 255, 255, 0.8));
-            border-radius: 2px;
-            animation: progressLoad 2.5s ease-out forwards;
-        }
-
-        @keyframes progressLoad {
-            0% {
-                width: 0%;
-            }
-
-            100% {
-                width: 100%;
-            }
-        }
-
         /* Desktop Layout Fixes */
         @media (min-width: 1024px) {
             .hero-stats {
@@ -204,55 +22,55 @@
                 gap: 2rem !important;
                 margin-bottom: 3rem !important;
             }
-            
+
             .stat-item {
                 display: block !important;
                 visibility: visible !important;
                 opacity: 1 !important;
                 padding: 2rem 1.5rem !important;
             }
-            
+
             .stat-number {
                 font-size: 2.5rem !important;
                 display: block !important;
             }
-            
+
             .stat-label {
                 font-size: 0.9rem !important;
                 display: block !important;
             }
         }
-        
+
         /* Critical Mobile Fixes */
         @media (max-width: 768px) {
             .about-content {
                 grid-template-columns: 1fr !important;
                 gap: 2rem !important;
             }
-            
+
             .contact-content {
                 grid-template-columns: 1fr !important;
                 gap: 2rem !important;
             }
-            
+
             .form-row {
                 grid-template-columns: 1fr !important;
                 gap: 1rem !important;
             }
-            
+
             .timeline-container {
                 padding: 0 1rem !important;
             }
-            
+
             .timeline {
                 padding-left: 1rem !important;
             }
-            
+
             .timeline-item {
                 margin-left: 0 !important;
                 padding: 1.5rem !important;
             }
-            
+
             .timeline-dot {
                 left: -1.5rem !important;
             }
@@ -261,6 +79,7 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">
@@ -287,16 +106,10 @@
                 <line x1="70" y1="65" x2="80" y2="65" stroke="white" stroke-width="1.5" opacity="0.6" />
                 <circle cx="42" cy="65" r="1.5" fill="white" opacity="0.6" />
                 <circle cx="78" cy="65" r="1.5" fill="white" opacity="0.6" />
-
-                <!-- Initials -->
-                <text x="60" y="95" text-anchor="middle" fill="white" font-family="Playfair Display, serif"
-                    font-size="16" font-weight="bold"></text>
             </svg>
         </div>
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Loading Academic Portfolio...</div>
-        <div class="loading-progress">
-            <div class="progress-bar"></div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
         </div>
     </div>
 
@@ -379,6 +192,10 @@
                             <i class="fas fa-envelope"></i>
                             Contact Me
                         </a>
+                        <a href="admin.html" class="btn btn-outline" target="_blank">
+                            <i class="fas fa-user-shield"></i>
+                            Admin Dashboard
+                        </a>
                     </div>
                 </div>
             </div>
@@ -388,11 +205,11 @@
     <!-- About Section -->
     <section id="about" class="about-section">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">About Me</h2>
                 <p class="section-subtitle">Academic Excellence & Innovation</p>
             </div>
-            <div class="about-content">
+            <div class="about-content reveal">
                 <div class="about-text">
                     <p class="about-description">
                         As an accomplished academic professional, I have dedicated over two decades to advancing
@@ -401,29 +218,29 @@
                         Machine Learning, Artificial Intelligence, Big Data Analytics, and IoT systems.
                     </p>
                     <div class="expertise-areas">
-                        <div class="expertise-item">
+                        <div class="expertise-item reveal">
                             <i class="fas fa-brain"></i>
                             <h4>Machine Learning</h4>
                             <p>Advanced algorithms and neural networks</p>
                         </div>
-                        <div class="expertise-item">
+                        <div class="expertise-item reveal">
                             <i class="fas fa-database"></i>
                             <h4>Big Data Analytics</h4>
                             <p>Large-scale data processing and insights</p>
                         </div>
-                        <div class="expertise-item">
+                        <div class="expertise-item reveal">
                             <i class="fas fa-shield-alt"></i>
                             <h4>Network Security</h4>
                             <p>Cybersecurity and privacy protection</p>
                         </div>
-                        <div class="expertise-item">
+                        <div class="expertise-item reveal">
                             <i class="fas fa-microchip"></i>
                             <h4>IoT Systems</h4>
                             <p>Connected devices and smart solutions</p>
                         </div>
                     </div>
                 </div>
-                <div class="about-sidebar">
+                <div class="about-sidebar reveal">
                     <div class="contact-card">
                         <h3><i class="fas fa-address-card"></i> Contact Information</h3>
                         <div class="contact-item">
@@ -458,13 +275,13 @@
     <!-- Experience Section -->
     <section id="experience" class="experience-section">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">Professional Experience</h2>
                 <p class="section-subtitle">Academic Leadership & Excellence</p>
             </div>
             <div class="timeline-container">
                 <div class="timeline">
-                    <div class="timeline-item">
+                    <div class="timeline-item reveal">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
                             <div class="timeline-date">Dec 2006 - Present</div>
@@ -474,7 +291,7 @@
                                 and Technology. Spearheading innovative research initiatives and mentoring students.</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item reveal">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
                             <div class="timeline-date">2001 - 2006</div>
@@ -484,7 +301,7 @@
                                 methodologies.</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item reveal">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
                             <div class="timeline-date">1996 - 2001</div>
@@ -502,13 +319,13 @@
     <!-- Research Section -->
     <section id="research" class="research-section">
         <div class="container">
-            <div class="section-header" data-aos="fade-up">
+            <div class="section-header reveal">
                 <h2 class="section-title">Research & Innovation</h2>
                 <p class="section-subtitle">Advancing the Frontiers of Computer Science</p>
             </div>
 
             <!-- Research Areas Filter -->
-            <div class="research-filter">
+            <div class="research-filter reveal">
                 <button class="filter-btn active" data-filter="all">All Areas</button>
                 <button class="filter-btn" data-filter="ai-ml">AI & ML</button>
                 <button class="filter-btn" data-filter="iot">IoT & Security</button>
@@ -517,7 +334,7 @@
             </div>
 
             <div class="research-grid" id="research-grid">
-                <div class="research-card" data-category="ai-ml" data-aos="flip-left" data-aos-delay="100">
+                <div class="research-card reveal" data-category="ai-ml">
                     <div class="research-icon">
                         <i class="fas fa-robot"></i>
                     </div>
@@ -535,7 +352,7 @@
                     </div>
                 </div>
 
-                <div class="research-card" data-category="iot" data-aos="flip-left" data-aos-delay="200">
+                <div class="research-card reveal" data-category="iot">
                     <div class="research-icon">
                         <i class="fas fa-network-wired"></i>
                     </div>
@@ -553,7 +370,7 @@
                     </div>
                 </div>
 
-                <div class="research-card" data-category="blockchain" data-aos="flip-left" data-aos-delay="300">
+                <div class="research-card reveal" data-category="blockchain">
                     <div class="research-icon">
                         <i class="fas fa-link"></i>
                     </div>
@@ -571,7 +388,7 @@
                     </div>
                 </div>
 
-                <div class="research-card" data-category="healthcare" data-aos="flip-left" data-aos-delay="400">
+                <div class="research-card reveal" data-category="healthcare">
                     <div class="research-icon">
                         <i class="fas fa-heartbeat"></i>
                     </div>
@@ -589,7 +406,7 @@
                     </div>
                 </div>
 
-                <div class="research-card" data-category="ai-ml" data-aos="flip-left" data-aos-delay="500">
+                <div class="research-card reveal" data-category="ai-ml">
                     <div class="research-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -607,7 +424,7 @@
                     </div>
                 </div>
 
-                <div class="research-card" data-category="iot" data-aos="flip-left" data-aos-delay="600">
+                <div class="research-card reveal" data-category="iot">
                     <div class="research-icon">
                         <i class="fas fa-microchip"></i>
                     </div>
@@ -627,7 +444,7 @@
             </div>
 
             <!-- Research Statistics -->
-            <div class="research-stats" data-aos="fade-up">
+            <div class="research-stats reveal">
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="fas fa-file-alt"></i>
@@ -671,11 +488,11 @@
     <!-- Publications Section -->
     <section id="publications" class="publications-section">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">Publications & Research</h2>
                 <p class="section-subtitle">Contributing to Global Knowledge</p>
             </div>
-            <div class="publications-filter">
+            <div class="publications-filter reveal">
                 <button class="filter-btn active" data-filter="all">All Publications</button>
                 <button class="filter-btn" data-filter="2024">2024</button>
                 <button class="filter-btn" data-filter="2023">2023</button>
@@ -686,182 +503,11 @@
                 <button class="filter-btn" data-filter="conference">Conferences</button>
                 <button class="filter-btn" data-filter="book chapter">Book Chapters</button>
             </div>
+            <!-- JS Populated Grid -->
             <div class="publications-grid" id="publications-grid">
-                <!-- 2024 Publications -->
-                <div class="publication-card" data-category="2024" data-aos="fade-up" data-aos-delay="100">
-                    <div class="publication-header">
-                        <span class="publication-year">2024</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Real Time Anomaly Detection in Big Data</h3>
-                    <p class="publication-subtitle">Using scalable Machine Learning Techniques</p>
-                    <p class="publication-journal">Advances in Nonlinear Variational Inequalities, Vol 27 No 4</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card" data-category="2024" data-aos="fade-up" data-aos-delay="200">
-                    <div class="publication-header">
-                        <span class="publication-year">2024</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Content-aware Recommendation System</h3>
-                    <p class="publication-subtitle">For integrated temporal semantic review text over web of things</p>
-                    <p class="publication-journal">Service Oriented Computing and Applications</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card" data-category="2024" data-aos="fade-up" data-aos-delay="300">
-                    <div class="publication-header">
-                        <span class="publication-year">2024</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Bio-Inspired EEG Signal Computing</h3>
-                    <p class="publication-subtitle">Using machine learning and Fuzzy Theory for Brain-Controlled
-                        Vehicles</p>
-                    <p class="publication-journal">SLAS Technology</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card" data-category="2024" data-aos="fade-up" data-aos-delay="400">
-                    <div class="publication-header">
-                        <span class="publication-year">2024</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Knowledge-based Deep Learning System</h3>
-                    <p class="publication-subtitle">For classifying Alzheimer's disease for multi-task learning</p>
-                    <p class="publication-journal">CAAI Transactions on Intelligence Technology</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card" data-category="2024" data-aos="fade-up" data-aos-delay="500">
-                    <div class="publication-header">
-                        <span class="publication-year">2024</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Efficient key revocation in IoT</h3>
-                    <p class="publication-subtitle">SN with lattice-based cryptography</p>
-                    <p class="publication-journal">Journal of Discrete Mathematical Sciences and Cryptography</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card" data-category="2024" data-aos="fade-up" data-aos-delay="600">
-                    <div class="publication-header">
-                        <span class="publication-year">2024</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Knowledge-based deep learning system</h3>
-                    <p class="publication-subtitle">For classifying Alzheimer's disease for multi-task learning</p>
-                    <p class="publication-journal">CAAI Transactions on Intelligence Technology</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <!-- 2023 Publications -->
-                <div class="publication-card hidden-item" data-category="2023" data-aos="fade-up" data-aos-delay="100">
-                    <div class="publication-header">
-                        <span class="publication-year">2023</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Security and Energy Efficient Cyber-Physical Systems</h3>
-                    <p class="publication-subtitle">Using predictive modeling approaches in Wireless Sensor Network</p>
-                    <p class="publication-journal">Wireless Networks (Springer IF3.0)</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card hidden-item" data-category="2023" data-aos="fade-up" data-aos-delay="200">
-                    <div class="publication-header">
-                        <span class="publication-year">2023</span>
-                        <span class="publication-type">Book Chapter</span>
-                    </div>
-                    <h3>Artificial Intelligence of Things (AIoT)</h3>
-                    <p class="publication-subtitle">And Metaverse Technology for Brain Health, Mental Health and
-                        Wellbeing</p>
-                    <p class="publication-journal">IGI Global, ISBN: 9781668489130</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <!-- 2022 Publications -->
-                <div class="publication-card hidden-item" data-category="2022" data-aos="fade-up" data-aos-delay="100">
-                    <div class="publication-header">
-                        <span class="publication-year">2022</span>
-                        <span class="publication-type">Journal</span>
-                    </div>
-                    <h3>Hybrid Block-Based Lightweight ML Models</h3>
-                    <p class="publication-subtitle">For Quality Preserving in IoT-Based Medical Images</p>
-                    <p class="publication-journal">Computational Intelligence and Neuroscience</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card hidden-item" data-category="2022" data-aos="fade-up" data-aos-delay="200">
-                    <div class="publication-header">
-                        <span class="publication-year">2022</span>
-                        <span class="publication-type">Book Chapter</span>
-                    </div>
-                    <h3>Role of AI, IoT, and IoD</h3>
-                    <p class="publication-subtitle">In avoiding and minimizing risks of future pandemics</p>
-                    <p class="publication-journal">Walter DE Gruyter, ISBN: 9783110767681</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <!-- 2021 Publications -->
-                <div class="publication-card hidden-item" data-category="2021" data-aos="fade-up" data-aos-delay="100">
-                    <div class="publication-header">
-                        <span class="publication-year">2021</span>
-                        <span class="publication-type">Conference</span>
-                    </div>
-                    <h3>Blockchain for Indian Agriculture</h3>
-                    <p class="publication-subtitle">A Revolution March 2021</p>
-                    <p class="publication-journal">International Conference on Recent Trends in Computing</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
-
-                <div class="publication-card hidden-item" data-category="2021" data-aos="fade-up" data-aos-delay="200">
-                    <div class="publication-header">
-                        <span class="publication-year">2021</span>
-                        <span class="publication-type">Conference</span>
-                    </div>
-                    <h3>Psychological Impacts of COVID-19</h3>
-                    <p class="publication-subtitle">On Human Health- Data Visualized</p>
-                    <p class="publication-journal">International Conference on Recent Trends in Computing</p>
-                    <div class="publication-actions">
-                        <button class="btn-small"><i class="fas fa-eye"></i> View</button>
-                        <button class="btn-small"><i class="fas fa-download"></i> Download</button>
-                    </div>
-                </div>
+                <!-- Content loaded by JS -->
             </div>
-            <div class="load-more-container">
+            <div class="load-more-container reveal">
                 <button class="btn btn-outline" id="load-more-publications">
                     <i class="fas fa-plus"></i>
                     Show More Publications
@@ -873,11 +519,11 @@
     <!-- Patents Section -->
     <section id="patents" class="patents-section">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">Patents & Innovations</h2>
                 <p class="section-subtitle">Intellectual Property & Technical Innovations</p>
             </div>
-            <div class="patents-filter">
+            <div class="patents-filter reveal">
                 <button class="filter-btn active" data-filter="all">All Patents</button>
                 <button class="filter-btn" data-filter="healthcare">Healthcare AI</button>
                 <button class="filter-btn" data-filter="blockchain">Blockchain & Security</button>
@@ -886,163 +532,9 @@
                 <button class="filter-btn" data-filter="ai">AI & ML</button>
             </div>
             <div class="patents-grid" id="patents-grid">
-                <div class="patent-card" data-aos="slide-up" data-aos-delay="100">
-                    <div class="patent-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Computer-implemented method for encryption</h3>
-                    <p>Over a blockchain data sharing in secure network</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202110143</span>
-                        <span class="patent-date">January 11, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card" data-aos="slide-up" data-aos-delay="200">
-                    <div class="patent-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h3>Machine Learning based Process</h3>
-                    <p>For Medical Data Pattern Identification and Application</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202131008193</span>
-                        <span class="patent-date">February 26, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card" data-aos="slide-up" data-aos-delay="300">
-                    <div class="patent-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Privacy-preserving Authentication</h3>
-                    <p>And Key-Management Protocol for Health Information System</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202110195</span>
-                        <span class="patent-date">April 21, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card" data-aos="slide-up" data-aos-delay="400">
-                    <div class="patent-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>Image processing system and method</h3>
-                    <p>For object detection using machine learning</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202111011159</span>
-                        <span class="patent-date">March 16, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card" data-aos="slide-up" data-aos-delay="500">
-                    <div class="patent-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>Communication method of blockchain</h3>
-                    <p>Data sharing using secure encryption</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202131012555</span>
-                        <span class="patent-date">March 23, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card" data-aos="slide-up" data-aos-delay="600">
-                    <div class="patent-icon">
-                        <i class="fas fa-wheelchair"></i>
-                    </div>
-                    <h3>Internet of things sensor based</h3>
-                    <p>Smart and intelligent wheelchair system</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202111016924</span>
-                        <span class="patent-date">April 11, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card hidden-item" data-aos="slide-up" data-aos-delay="100">
-                    <div class="patent-icon">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <h3>IoT based system for monitoring</h3>
-                    <p>And notification for uses of liquefied petroleum gas</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202131017275</span>
-                        <span class="patent-date">April 13, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card hidden-item" data-aos="slide-up" data-aos-delay="200">
-                    <div class="patent-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>Artificial intelligence-based system</h3>
-                    <p>For design surface of computerized building design model</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202111017877</span>
-                        <span class="patent-date">April 17, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card hidden-item" data-aos="slide-up" data-aos-delay="300">
-                    <div class="patent-icon">
-                        <i class="fas fa-virus"></i>
-                    </div>
-                    <h3>Deep learning-based system</h3>
-                    <p>For detection of covid-19 disease and patient health risk</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202131018259</span>
-                        <span class="patent-date">April 20, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card hidden-item" data-aos="slide-up" data-aos-delay="400">
-                    <div class="patent-icon">
-                        <i class="fas fa-city"></i>
-                    </div>
-                    <h3>A Smart City System</h3>
-                    <p>For Citizen's Utilizing Ubiquitous Computing Technique</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202110194</span>
-                        <span class="patent-date">April 21, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card hidden-item" data-aos="slide-up" data-aos-delay="500">
-                    <div class="patent-icon">
-                        <i class="fas fa-hospital"></i>
-                    </div>
-                    <h3>An IoT Based System</h3>
-                    <p>For Emergency Healthcare</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202110577</span>
-                        <span class="patent-date">May 05, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
-
-                <div class="patent-card hidden-item" data-aos="slide-up" data-aos-delay="600">
-                    <div class="patent-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>A Cloud computing enabled</h3>
-                    <p>5G wireless sensor network</p>
-                    <div class="patent-meta">
-                        <span class="patent-number">202141050174</span>
-                        <span class="patent-date">November 19, 2021</span>
-                        <span class="patent-status">Granted</span>
-                    </div>
-                </div>
+                <!-- Content loaded by JS -->
             </div>
-            <div class="load-more-container">
+            <div class="load-more-container reveal">
                 <button class="btn btn-outline" id="load-more-patents">
                     <i class="fas fa-plus"></i>
                     Show More Patents
@@ -1054,11 +546,11 @@
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">Get In Touch</h2>
                 <p class="section-subtitle">Let's Collaborate on Innovative Research</p>
             </div>
-            <div class="contact-content">
+            <div class="contact-content reveal">
                 <div class="contact-info">
                     <div class="contact-card-large">
                         <h3>Contact Information</h3>
