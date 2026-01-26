@@ -792,6 +792,66 @@ section {
 }
 
 /* =========================================
+   Gallery Section
+   ========================================= */
+.gallery-section {
+    background-color: var(--bg-surface);
+}
+
+.gallery-grid {
+    /* Masonry Layout using CSS Columns */
+    column-count: 3;
+    column-gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .gallery-grid {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-grid {
+        column-count: 1;
+    }
+}
+
+.gallery-item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 1.5rem;
+    /* Vertical gap for masonry items */
+    break-inside: avoid;
+    /* Prevent items from splitting across columns */
+    display: block;
+    backface-visibility: hidden;
+    /* Smoother animation */
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    /* Allow natural height to show full image */
+    display: block;
+    /* Remove bottom whitespace */
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+
+/* =========================================
    Contact Section
    ========================================= */
 .contact-section {

@@ -448,6 +448,7 @@ function initializePortfolio() {
     // Initialize everything
     populatePublications();
     populatePatents();
+    populateGallery();
     animateOnScroll();
     animateCounters();
 }
@@ -1226,3 +1227,46 @@ function getEventIcon(type) {
 // Make functions globally available
 window.openEventsModal = openEventsModal;
 window.closeEventsModal = closeEventsModal;
+
+// ===== POPULATE GALLERY =====
+function populateGallery() {
+    const galleryGrid = document.getElementById('gallery-grid');
+    if (!galleryGrid) return;
+
+    // List of images found in the directory
+    const galleryImages = [
+        '1.jpeg', '3.jpeg', '4.jpeg', '5.jpeg',
+        '6.jpeg', '7.jpeg', '8.jpeg', '9.jpeg',
+        '10.jpeg', '11.jpeg', '12.jpeg', '21.jpeg',
+        'photo.png'
+    ];
+
+    galleryGrid.innerHTML = '';
+
+    galleryImages.forEach((imgSrc, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item reveal';
+
+        galleryItem.innerHTML = `
+            <img src="${imgSrc}" alt="Gallery Image ${index + 1}" loading="lazy">
+        `;
+
+        // Simple click to view full size
+        galleryItem.addEventListener('click', () => {
+            window.open(imgSrc, '_blank');
+        });
+
+        galleryGrid.appendChild(galleryItem);
+
+        // Observer needs to observe this new element
+        const animateObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    animateObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        animateObserver.observe(galleryItem);
+    });
+}
